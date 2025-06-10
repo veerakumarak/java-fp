@@ -41,12 +41,15 @@ public class Result<T> {
     }
 
     public boolean isErrorEq(Class<? extends Error> errorClass) {
-        return isError() && errorClass.isInstance(error);
+        return error != null && error.isEq(errorClass);
     }
 
     public T get() {
-        if (value == null) {
-            throw new NoSuchElementException("No value present");
+        return expect("No value present");
+    }
+    public T expect(String message) {
+        if (isError()) {
+            throw new NoSuchElementException(message);
         }
         return value;
     }
@@ -73,7 +76,7 @@ public class Result<T> {
     public <U> Result<U> map(Function<T, U> mapper) {
         Objects.requireNonNull(mapper, "mapper is null");
         if (this.isError()) {
-            return (Result<U>) this;
+            return Result.error(error());
         } else {
             try {
                 return ok(mapper.apply(this.get()));
@@ -87,7 +90,7 @@ public class Result<T> {
     public <U> Result<U> flatMap(Function<T, Result<U>> mapper) {
         Objects.requireNonNull(mapper, "mapper is null");
         if (this.isError()) {
-            return (Result<U>) this;
+            return Result.error(error());
         } else {
             try {
                 return mapper.apply(this.get());
