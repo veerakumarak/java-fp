@@ -63,7 +63,7 @@ public class Result<T> {
         }
     }
 
-    static <T> Result<T> of(Supplier<T> supplier) {
+    public static <T> Result<T> of(Supplier<T> supplier) {
         Objects.requireNonNull(supplier, "supplier is null");
         try {
             return Result.ok(supplier.get());
@@ -102,4 +102,3 @@ public class Result<T> {
     }
 
 }
-
