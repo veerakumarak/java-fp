@@ -25,11 +25,11 @@ public class Result<T> {
     }
 
     public static <T> Result<T> error(Error error) {
-        return new Result<T>(error);
+        return new Result<>(error);
     }
 
     public static <T> Result<T> error(String message) {
-        return error(new Error(message));
+        return error(Error.of(message));
     }
 
     public boolean isOk() {
@@ -67,9 +67,8 @@ public class Result<T> {
         Objects.requireNonNull(supplier, "supplier is null");
         try {
             return Result.ok(supplier.get());
-        } catch (Throwable var2) {
-            Throwable t = var2;
-            return Result.error(t.toString());
+        } catch (Throwable throwable) {
+            return Result.error(throwable.toString());
         }
     }
 
@@ -80,9 +79,8 @@ public class Result<T> {
         } else {
             try {
                 return ok(mapper.apply(this.get()));
-            } catch (Throwable var3) {
-                Throwable t = var3;
-                return error(t.toString());
+            } catch (Throwable throwable) {
+                return error(throwable.toString());
             }
         }
     }
@@ -94,9 +92,8 @@ public class Result<T> {
         } else {
             try {
                 return mapper.apply(this.get());
-            } catch (Throwable var3) {
-                Throwable t = var3;
-                return error(t.toString());
+            } catch (Throwable throwable) {
+                return error(throwable.toString());
             }
         }
     }

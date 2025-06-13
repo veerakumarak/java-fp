@@ -7,10 +7,18 @@ public class Error {
     final private boolean isError;
     final private String message;
 
-    public Error(String message) {
-        Objects.requireNonNull(message);
-        this.isError = true;
+    private Error(boolean isError, String message) {
+        this.isError = isError;
         this.message = message;
+    }
+
+    public static Error of(String message) {
+        Objects.requireNonNull(message);
+        return new Error(true, message);
+    }
+
+    public static Error empty() {
+        return new Error(false, null);
     }
 
     public String getMessage() {
@@ -41,9 +49,8 @@ public class Error {
         try {
             runnable.run();
             return null;
-        } catch (Throwable var2) {
-            Throwable t = var2;
-            return new Error(t.getMessage());
+        } catch (Throwable throwable) {
+            return Error.of(throwable.getMessage());
         }
     }
 
