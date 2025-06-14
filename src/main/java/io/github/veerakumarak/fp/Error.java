@@ -12,7 +12,7 @@ public class Error {
         this.message = message;
     }
 
-    public static Error of(String message) {
+    public static Error with(String message) {
         Objects.requireNonNull(message);
         return new Error(true, message);
     }
@@ -44,13 +44,13 @@ public class Error {
         }
     }
 
-    static Error of(Runnable runnable) {
+    public static Error of(Runnable runnable) {
         Objects.requireNonNull(runnable, "runnable is null");
         try {
             runnable.run();
             return null;
         } catch (Throwable throwable) {
-            return Error.of(throwable.getMessage());
+            return Error.with(throwable.getMessage());
         }
     }
 

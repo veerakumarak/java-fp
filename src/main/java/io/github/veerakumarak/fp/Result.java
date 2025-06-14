@@ -29,7 +29,7 @@ public class Result<T> {
     }
 
     public static <T> Result<T> error(String message) {
-        return error(Error.of(message));
+        return error(Error.with(message));
     }
 
     public boolean isOk() {
