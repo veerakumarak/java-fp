@@ -12,7 +12,7 @@ public class Result<T> {
 
     private Result(T value) {
         this.value = value;
-        this.error = null;
+        this.error = Error.empty();
     }
 
     private Result(Error error) {
@@ -33,15 +33,15 @@ public class Result<T> {
     }
 
     public boolean isOk() {
-        return !isError();
+        return error.isEmpty();
     }
 
     public boolean isError() {
-        return error != null;
+        return !isOk();
     }
 
     public boolean isErrorEq(Class<? extends Error> errorClass) {
-        return error != null && error.isEq(errorClass);
+        return isError() && error.isEq(errorClass);
     }
 
     public T get() {
