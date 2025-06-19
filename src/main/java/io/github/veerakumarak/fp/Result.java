@@ -44,23 +44,52 @@ public class Result<T> {
         return isError() && error.isEq(errorClass);
     }
 
-    public T get() {
-        return expect("No value present");
+    public Error error() {
+        return error;
     }
+
     public T expect(String message) {
         if (isError()) {
             throw new NoSuchElementException(message);
         }
         return value;
     }
-    public Error error() {
-        return error;
+    public T get() {
+        return expect("No value present");
+    }
+
+    public T orElse(T defaultValue) {
+        return isOk() ? value : defaultValue;
+    }
+
+    public T orElseGet(Supplier<T> supplier) {
+        return isOk() ? value : supplier.get();
     }
 
     public void ifOk(Consumer<? super T> action) {
-        if (value != null) {
+        if (this.isOk()) {
             action.accept(value);
         }
+    }
+
+    public void ifError(Consumer<Error> action) {
+        if (this.isError()) {
+            action.accept(error);
+        }
+    }
+
+    public Result<T> inspectOk(Consumer<? super T> action) {
+        if (this.isOk()) {
+            action.accept(value);
+        }
+        return this;
+    }
+
+    public Result<T> inspectError(Consumer<Error> action) {
+        if (this.isError()) {
+            action.accept(error);
+        }
+        return this;
     }
 
     public static <T> Result<T> of(Supplier<T> supplier) {
