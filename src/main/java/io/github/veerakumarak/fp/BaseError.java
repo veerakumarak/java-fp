@@ -2,31 +2,31 @@ package io.github.veerakumarak.fp;
 
 import java.util.Objects;
 
-public class Error extends RuntimeException {
+public class BaseError extends RuntimeException {
 
     private final String message;
     private final Throwable cause; // Can be another MyError or any other Throwable
 
-    public Error(String message) {
+    public BaseError(String message) {
         this.message = message;
         this.cause = null;
     }
 
-    private Error(String message, Throwable throwable) {
+    private BaseError(String message, Throwable throwable) {
         this.message = message;
         this.cause = throwable;
     }
 
-    public static Error empty() {
-        return new Error(null, null);
+    public static BaseError empty() {
+        return new BaseError(null, null);
     }
 
-    public static Error with(String message) {
+    public static BaseError with(String message) {
         return new Error(message);
     }
 
-    public static Error wrap(String message, Error error) {
-        return new Error(message, error);
+    public static BaseError wrap(String message, Error error) {
+        return new BaseError(message, error);
     }
 
     public String getMessage() {
