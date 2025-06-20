@@ -1,6 +1,5 @@
 package io.github.veerakumarak.fp;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -50,7 +49,7 @@ public class Result<T> {
 
     public T expect(String message) {
         if (isError()) {
-            throw new NoSuchElementException(message);
+            throw Error.with(message);
         }
         return value;
     }

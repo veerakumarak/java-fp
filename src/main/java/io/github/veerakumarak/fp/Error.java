@@ -2,46 +2,22 @@ package io.github.veerakumarak.fp;
 
 import java.util.Objects;
 
-public class Error {
+public class Error extends BaseError {
 
-    final private boolean isError;
-    final private String message;
-
-    private Error(boolean isError, String message) {
-        this.isError = isError;
-        this.message = message;
-    }
-
-    public static Error with(String message) {
-        Objects.requireNonNull(message);
-        return new Error(true, message);
+    Error(String message, Throwable cause) {
+        super(message, cause);
     }
 
     public static Error empty() {
-        return new Error(false, null);
+        return new Error(null, null);
     }
 
-    public String getMessage() {
-        return message;
+    public static Error with(String message) {
+        return new Error(message, null);
     }
 
-    public boolean isEq(Class<? extends Error> errorClass) {
-        Objects.requireNonNull(errorClass, "class provided is null");
-        return errorClass.isInstance(this);
-    }
-
-    public boolean isPresent() {
-        return this.isError;
-    }
-
-    public boolean isEmpty() {
-        return !this.isError;
-    }
-
-    public void unwrap() {
-        if (isPresent()) {
-            throw new RuntimeException(this.message);
-        }
+    public static Error wrap(String message, Error error) {
+        return new Error(message, error);
     }
 
     public static Error of(Runnable runnable) {
