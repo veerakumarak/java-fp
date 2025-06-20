@@ -1,11 +1,11 @@
 package io.github.veerakumarak.fp.errors;
 
-import io.github.veerakumarak.fp.BaseError;
+import io.github.veerakumarak.fp.Failure;
 
 import java.util.List;
 import java.util.Map;
 
-public class InvalidRequest extends BaseError {
+public class InvalidRequest extends Failure {
     private final Map<String, List<String>> reasons;
     public InvalidRequest(final String message) {
         super(message);

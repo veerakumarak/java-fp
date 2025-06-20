@@ -2,7 +2,7 @@ package io.github.veerakumarak.fp;
 
 import junit.framework.TestCase;
 
-public class ErrorTest extends TestCase {
+public class FailureTest extends TestCase {
 
     public void testWith() {
     }
