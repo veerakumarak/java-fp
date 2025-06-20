@@ -12,6 +12,11 @@ public class InvalidRequest extends BaseError {
         reasons = null;
     }
 
+    public InvalidRequest(String key, String reason) {
+        super(null);
+        this.reasons = Map.of(key, List.of(reason));
+    }
+
     public InvalidRequest(Map<String, List<String>> reasons) {
         super(null);
         this.reasons = reasons;
