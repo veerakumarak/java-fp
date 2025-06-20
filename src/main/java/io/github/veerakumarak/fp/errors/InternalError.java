@@ -1,8 +1,8 @@
 package io.github.veerakumarak.fp.errors;
 
-import io.github.veerakumarak.fp.Error;
+import io.github.veerakumarak.fp.BaseError;
 
-public class InternalError extends Error {
+public class InternalError extends BaseError {
     public InternalError(final String message) {
         super(message);
     }

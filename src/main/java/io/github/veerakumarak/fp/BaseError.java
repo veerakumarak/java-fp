@@ -2,7 +2,7 @@ package io.github.veerakumarak.fp;
 
 import java.util.Objects;
 
-public class BaseError extends RuntimeException {
+public abstract class BaseError extends RuntimeException {
 
     private final String message;
     private final Throwable cause; // Can be another MyError or any other Throwable
@@ -12,21 +12,9 @@ public class BaseError extends RuntimeException {
         this.cause = null;
     }
 
-    private BaseError(String message, Throwable throwable) {
+    BaseError(String message, Throwable throwable) {
         this.message = message;
         this.cause = throwable;
-    }
-
-    public static BaseError empty() {
-        return new BaseError(null, null);
-    }
-
-    public static BaseError with(String message) {
-        return new Error(message);
-    }
-
-    public static BaseError wrap(String message, Error error) {
-        return new BaseError(message, error);
     }
 
     public String getMessage() {
@@ -43,11 +31,15 @@ public class BaseError extends RuntimeException {
         return this.cause;
     }
 
+    public Error wrap(Error error) {
+        return new Error(message, error);
+    }
+
     public Error unwrap() {
         if (cause instanceof Error) {
             return (Error) cause;
         }
-        return empty();
+        return new Error(null, null);
     }
 
     public void orThrow() {
@@ -64,19 +56,9 @@ public class BaseError extends RuntimeException {
         return !isPresent();
     }
 
-    public boolean isEq(Class<? extends Error> errorClass) {
+    public boolean isEq(Class<? extends BaseError> errorClass) {
         Objects.requireNonNull(errorClass, "class provided is null");
         return isPresent() && errorClass.isInstance(this);
-    }
-
-    public static Error of(Runnable runnable) {
-        Objects.requireNonNull(runnable, "runnable is null");
-        try {
-            runnable.run();
-            return null;
-        } catch (Throwable throwable) {
-            return Error.with(throwable.getMessage());
-        }
     }
 
 }

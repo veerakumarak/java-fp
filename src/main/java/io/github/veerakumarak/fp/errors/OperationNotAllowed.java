@@ -1,8 +1,8 @@
 package io.github.veerakumarak.fp.errors;
 
-import io.github.veerakumarak.fp.Error;
+import io.github.veerakumarak.fp.BaseError;
 
-public class OperationNotAllowed extends Error {
+public class OperationNotAllowed extends BaseError {
     public OperationNotAllowed(final String message) {
         super(message);
     }
