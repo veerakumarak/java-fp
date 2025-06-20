@@ -1,4 +1,4 @@
-package io.github.veerakumarak.fp.errors;
+package io.github.veerakumarak.fp.failures;
 
 import io.github.veerakumarak.fp.Failure;
 

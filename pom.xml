@@ -4,7 +4,7 @@
 
   <groupId>io.github.veerakumarak</groupId>
   <artifactId>fp</artifactId>
-  <version>4.0.0</version>
+  <version>5.0.0</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>

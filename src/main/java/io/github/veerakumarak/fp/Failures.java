@@ -1,6 +1,6 @@
 package io.github.veerakumarak.fp;
 
-import io.github.veerakumarak.fp.errors.IllegalArgument;
+import io.github.veerakumarak.fp.failures.IllegalArgument;
 
 import java.util.Objects;
 
