@@ -1,7 +1,5 @@
 package io.github.veerakumarak.fp;
 
-import io.github.veerakumarak.fp.errors.IllegalArgument;
-
 import java.util.Objects;
 
 public class Failure extends RuntimeException {
@@ -10,7 +8,7 @@ public class Failure extends RuntimeException {
 
     private static final Failure EMPTY = new Failure("no failure", null);
 
-    private Failure(String message, Throwable cause) {
+    protected Failure(String message, Throwable cause) {
         super(message);
         this.cause = cause;
     }
@@ -19,34 +17,8 @@ public class Failure extends RuntimeException {
         this(message, null);
     }
 
-    public static Failure empty() {
+    static Failure getEmpty() {
         return EMPTY;
-    }
-
-    public static Failure with(String message) {
-        checkMessage(message);
-        return new Failure(message);
-    }
-
-    private static void checkMessage(String message) {
-        if (message == null || message.isBlank()) {
-            throw new IllegalArgument("AppError message cannot be null or blank when created directly.");
-        }
-    }
-
-    public static Failure wrap(String message, Throwable cause) {
-        String finalMessage = message;
-        if (finalMessage == null || finalMessage.isBlank()) {
-            finalMessage = (cause != null && cause.getMessage() != null && !cause.getMessage().isBlank())
-                    ? cause.getMessage()
-                    : "An unexpected error occurred."; // Default fallback
-        }
-        return new Failure(finalMessage, cause);
-    }
-
-    public static Failure wrap(String message, Failure failure) {
-        Objects.requireNonNull(failure, "Original failure to wrap cannot be null.");
-        return wrap(message, (Throwable) failure);
     }
 
     @Override
@@ -105,12 +77,12 @@ public class Failure extends RuntimeException {
         Objects.requireNonNull(runnable, "runnable is null");
         try {
             runnable.run();
-            return Failure.empty();
+            return Failures.empty();
         } catch (Throwable throwable) {
             String errorMessage = (throwable.getMessage() != null && !throwable.getMessage().isBlank())
                     ? throwable.getMessage()
                     : "An unexpected error occurred during runnable execution.";
-            return Failure.wrap(errorMessage, throwable);
+            return Failures.wrap(errorMessage, throwable);
         }
     }
 

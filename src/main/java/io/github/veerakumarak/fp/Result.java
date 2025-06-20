@@ -14,7 +14,7 @@ public final class Result<T> {
 
     private Result(T value) {
         this.value = value;
-        this.failure = Failure.empty();
+        this.failure = Failures.empty();
     }
 
     private Result(Failure failure) {
@@ -34,7 +34,7 @@ public final class Result<T> {
     }
 
     public static <T> Result<T> failure(String message) {
-        return failure(Failure.with(message));
+        return failure(Failures.with(message));
     }
 
     public boolean isOk() {
@@ -58,7 +58,7 @@ public final class Result<T> {
 
     public T expect(String message) {
         if (isFailure()) {
-            throw Failure.wrap(message + ": " + failure.getMessage(), failure);
+            throw Failures.wrap(message + ": " + failure.getMessage(), failure);
         }
         return value;
     }
@@ -126,7 +126,7 @@ public final class Result<T> {
         } catch (Throwable throwable) {
             String errorMessage = Optional.ofNullable(throwable.getMessage())
                     .orElse("An unexpected error occurred during supplier execution.");
-            return failure(Failure.wrap(errorMessage, throwable));
+            return failure(Failures.wrap(errorMessage, throwable));
         }
     }
 
@@ -140,7 +140,7 @@ public final class Result<T> {
             } catch (Throwable throwable) {
                 String errorMessage = Optional.ofNullable(throwable.getMessage())
                         .orElse("An error occurred during mapping.");
-                return failure(Failure.wrap(errorMessage, throwable));
+                return failure(Failures.wrap(errorMessage, throwable));
             }
         }
     }
@@ -155,7 +155,7 @@ public final class Result<T> {
             } catch (Throwable throwable) {
                 String errorMessage = Optional.ofNullable(throwable.getMessage())
                         .orElse("An error occurred during flatMapping.");
-                return failure(Failure.wrap(errorMessage, throwable));
+                return failure(Failures.wrap(errorMessage, throwable));
             }
         }
     }
