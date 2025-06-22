@@ -13,12 +13,12 @@ public class InvalidRequest extends Failure {
     }
 
     public InvalidRequest(String key, String reason) {
-        super(null);
+        super(String.format("Invalid request for key %s with reasons %s", key, reason));
         this.reasons = Map.of(key, List.of(reason));
     }
 
     public InvalidRequest(Map<String, List<String>> reasons) {
-        super(null);
+        super(String.format("Invalid request with reasons %s", reasons));
         this.reasons = reasons;
     }
 
