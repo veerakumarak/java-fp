@@ -1,6 +1,7 @@
 package io.github.veerakumarak.fp;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class Failure extends RuntimeException {
 
@@ -72,6 +73,37 @@ public class Failure extends RuntimeException {
         Objects.requireNonNull(failureClass, "class provided is null");
         return isPresent() && failureClass.isInstance(this);
     }
+
+    public void ifPresent(Consumer<Failure> action) {
+        Objects.requireNonNull(action);
+        if (this.isPresent()) {
+            action.accept(this);
+        }
+    }
+
+    public void ifEmpty(Runnable runnable) {
+        Objects.requireNonNull(runnable);
+        if (this.isEmpty()) {
+            runnable.run();
+        }
+    }
+
+    public Failure inspectPresent(Consumer<Failure> action) {
+        Objects.requireNonNull(action);
+        if (this.isPresent()) {
+            action.accept(this);
+        }
+        return this;
+    }
+
+    public Failure inspectEmpty(Runnable runnable) {
+        Objects.requireNonNull(runnable);
+        if (this.isEmpty()) {
+            runnable.run();
+        }
+        return this;
+    }
+
 
     public static Failure of(Runnable runnable) {
         Objects.requireNonNull(runnable, "runnable is null");
