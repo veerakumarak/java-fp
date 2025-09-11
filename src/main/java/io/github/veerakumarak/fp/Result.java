@@ -119,7 +119,7 @@ public final class Result<T> {
         return this;
     }
 
-    public static <T> Result<T> of(Supplier<T> supplier) {
+    public static <T> Result<T> of(ThrowingSupplier<T> supplier) {
         Objects.requireNonNull(supplier, "supplier is null");
         try {
             return Result.ok(supplier.get());
