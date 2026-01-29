@@ -105,7 +105,7 @@ public class Failure extends RuntimeException {
     }
 
 
-    public static Failure of(Runnable runnable) {
+    public static Failure of(ThrowingRunnable runnable) {
         Objects.requireNonNull(runnable, "runnable is null");
         try {
             runnable.run();
