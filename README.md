@@ -44,7 +44,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>io.github.veerakumarak</groupId>
     <artifactId>fp</artifactId>
-    <version>4.0.0</version>
+    <version>5.1.2</version>
 </dependency>
 ```
 
